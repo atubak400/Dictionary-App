@@ -7,11 +7,12 @@ import Header from './components/header/Header'
 function App() {
   const [word, setWord] = useState('')
   const [meanings, setMeanings] = useState([])
+  const [category, setCategory] = useState('en')
 
   const dictionaryApi = async () => {
     try {
       const data = await axios.get(
-        'https://api.dictionaryapi.dev/api/v2/entries/en/plane'
+        `https://api.dictionaryapi.dev/api/v2/entries/${category}/${word}`
       )
 
       console.log(data)
@@ -25,11 +26,16 @@ function App() {
 
   useEffect(() => {
     dictionaryApi()
-  }, [])
+  }, [word, category])
   return (
     <div className='App'>
       <Container className='container' maxWidth='md'>
-        <Header />
+        <Header
+          category={category}
+          setCategory={setCategory}
+          word={word}
+          setWord={setWord}
+        />
       </Container>
     </div>
   )

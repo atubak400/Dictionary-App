@@ -7,8 +7,9 @@ import {
   MenuItem,
 } from '@material-ui/core'
 import categories from '../../data/category'
+import createTypography from '@material-ui/core/styles/createTypography'
 
-function Header() {
+function Header({ setCategory, category, word, setWord }) {
   const darkTheme = createTheme({
     palette: {
       primary: {
@@ -18,19 +19,35 @@ function Header() {
     },
   })
 
+  const handleChange = (language) => {
+    setCategory(language)
+    setWord('')
+  }
+
   return (
     <div className='header'>
-      <span className='title'>Atuba Dictionary</span>
+      <span className='title'>{word ? word : 'Atuba Dictionary'}</span>
       <div className='inputs'>
         <ThemeProvider theme={darkTheme}>
-          <TextField id='standard-basic' label='standard' />
           <TextField
-            id='standard-select-currency'
+            className='search'
+            label='Search a word'
+            label='standard'
+            value={word}
+            onChange={(e) => setWord(e.target.value)}
+          />
+          <TextField
+            className='select'
             select
-            label='select'
-            helperText='Please select your currency'
+            label='Language'
+            value={category}
+            onChange={(e) => handleChange(e.target.value)}
           >
-            <MenuItem>english</MenuItem>
+            {categories.map((option) => (
+              <MenuItem key={option.label} value={option.label}>
+                {option.value}
+              </MenuItem>
+            ))}
           </TextField>
         </ThemeProvider>
       </div>
