@@ -7,15 +7,14 @@ import {
   MenuItem,
 } from '@material-ui/core'
 import categories from '../../data/category'
-import createTypography from '@material-ui/core/styles/createTypography'
 
-function Header({ setCategory, category, word, setWord }) {
+function Header({ setCategory, category, word, setWord, LightMode }) {
   const darkTheme = createTheme({
     palette: {
       primary: {
-        main: '#fff',
+        main: LightMode ? '#000' : '#fff',
       },
-      type: 'dark',
+      type: LightMode ? 'light' : 'dark',
     },
   })
 
